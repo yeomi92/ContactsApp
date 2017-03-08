@@ -13,5 +13,5 @@
         android:id="@+id/btGoList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="GO LIST"/>
+        android:text="리스트로 가기"/>
 </LinearLayout>
