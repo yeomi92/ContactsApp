@@ -3,9 +3,7 @@ package com.hanbit.contactsapp.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.hanbit.contactsapp.domain.MemberBean;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         String sql="CREATE TABLE IF NOT EXISTS Member(_id integer primary key autoincrement, name TEXT, phone TEXT, age TEXT, address TEXT, salary TEXT);";
         db.execSQL(sql);
         for(int i=0;i<12;i++){
-            db.execSQL(String.format("INSERT INTO Member(name,phone,age,address,salary) VALUES(%s,%s,%s,%s,%s);","홍길동"+i,"010-0000-000"+i,"2"+i,"서울",(i+1)+"00"));
+            db.execSQL(String.format("INSERT INTO Member(name,phone,age,address,salary) VALUES('%s','%s','%s','%s','%s');","홍길동"+i,"010-0000-000"+i,"2"+i,"서울",(i+1)+"00"));
         }
     }
 
