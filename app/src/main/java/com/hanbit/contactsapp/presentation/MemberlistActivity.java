@@ -32,8 +32,8 @@ public class MemberlistActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MemberlistActivity.this,"detail",Toast.LENGTH_LONG).show();
-                Intent intent=new Intent(MemberlistActivity.this,MemberlistActivity.class);
-                intent.putExtra("id","hong");
+                Intent intent=new Intent(MemberlistActivity.this,MemberdetailActivity.class);
+                //intent.putExtra("id","ho");
                 startActivity(intent);
             }
         });
