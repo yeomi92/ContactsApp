@@ -14,13 +14,13 @@ public class MemberdetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memberdetail);
         Intent intent=this.getIntent();
+        final String id=intent.getExtras().getString("id");
         //final String id=intent.getExtras().getString("id");
-        //final String id2=intent.getExtras().getString("id2");
 
         findViewById(R.id.btGo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MemberdetailActivity.this,"ID is ",Toast.LENGTH_LONG).show();
+                Toast.makeText(MemberdetailActivity.this,"ID is "+id,Toast.LENGTH_LONG).show();
                 startActivity(new Intent(MemberdetailActivity.this,MemberupdateActivity.class));
             }
         });
