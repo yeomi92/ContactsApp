@@ -1,7 +1,6 @@
 package com.hanbit.contactsapp.presentation;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hanbit.contactsapp.R;
 import com.hanbit.contactsapp.dao.ListQuery;
@@ -27,34 +27,19 @@ public class MemberlistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memberlist);
         ListView mList= (ListView) findViewById(R.id.mList);
-        mList.setAdapter(new MemberAdapter(null,this));
+
         final MemberBean member=new MemberBean();
         final ArrayList<MemberBean>list=new ArrayList<>();
+        final MemberList mlist=new MemberList(MemberlistActivity.this);
         ListService service=new ListService() {
             @Override
-            public ArrayList<MemberBean> list() {
-                member.setName("홍길동");
-                list.add(member);
-                return list;
+            public ArrayList<?> list() {
+                return mlist.list("select _id AS id, name, phone, age, address, salary from member;");
             }
         };
-        service.list();
-        findViewById(R.id.btGo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final MemberList mlist=new MemberList(MemberlistActivity.this);
-                ListService service=new ListService() {
-                    @Override
-                    public ArrayList<?> list() {
-                        return mlist.list("select _id AS id, name, phone, age, address, salary from member;");
-                    }
-                };
-                ArrayList<MemberBean>list= (ArrayList<MemberBean>) service.list();
-                Intent intent=new Intent(MemberlistActivity.this,MemberdetailActivity.class);
-                intent.putExtra("id",list.get(0).getName());
-                startActivity(intent);
-            }
-        });
+        ArrayList<MemberBean>memberList= (ArrayList<MemberBean>) service.list();
+        Toast.makeText(MemberlistActivity.this,"list검증",Toast.LENGTH_SHORT).show();
+        mList.setAdapter(new MemberAdapter(memberList,this));
     }
     class MemberList extends ListQuery{
 
@@ -90,51 +75,51 @@ public class MemberlistActivity extends AppCompatActivity {
             }
             return list;
         }
-        class MemberAdapter extends BaseAdapter {
-            ArrayList<?>list;
-            LayoutInflater inflater;
-            private int[] photos={R.drawable.cupcake,R.drawable.donut,R.drawable.eclair,R.drawable.froyo,R.drawable.gingerbread,R.drawable.honeycomb,R.drawable.icecream,R.drawable.jellybean,R.drawable.kitkat,R.drawable.lollipop};
-            public MemberAdapter(ArrayList<?> list, Context context) {
-                this.list = list;
-                this.inflater=LayoutInflater.from(context);//inflater에 바로 context값 전달
-            }
-
-            @Override
-            public int getCount() {
-                return list.size();
-            }
-
-            @Override
-            public Object getItem(int i) {
-                return list.get(i);
-            }
-
-            @Override
-            public long getItemId(int i) { //index
-                return i;
-            }
-
-            //외부에서 받는 View를 변환해서 반환한다.
-            @Override
-            public View getView(int i, View v, ViewGroup g) {
-                ViewHoler holder;
-                if(v==null){
-                    v=inflater.inflate(R.layout.member_item,null);
-                    holder=new ViewHoler();
-                    holder.profileImg= (ImageView) v.findViewById(R.id.profileImg);
-                    holder.tvName= (TextView) v.findViewById(R.id.tvName);
-                    holder.tvPhone= (TextView) v.findViewById(R.id.tvPhone);
-                    v.setTag(holder);
-                }else{
-                    holder= (ViewHoler) v.getTag();
-                }
-                holder.profileImg.setImageResource(photos[i]);
-                holder.tvName.setText(((MemberBean)list.get(i)).getName());
-                holder.tvPhone.setText(((MemberBean)list.get(i)).getPhone());
-                return v;
-            }
-
+    }
+    class MemberAdapter extends BaseAdapter {
+        ArrayList<?>list;
+        LayoutInflater inflater;
+        private int[] photos={R.drawable.cupcake,R.drawable.donut,R.drawable.eclair,R.drawable.froyo,R.drawable.gingerbread,R.drawable.honeycomb,R.drawable.icecream,R.drawable.jellybean,R.drawable.kitkat,R.drawable.lollipop,R.drawable.cupcake,R.drawable.donut};
+        public MemberAdapter(ArrayList<?> list, Context context) {
+            this.list = list;
+            this.inflater=LayoutInflater.from(context);//inflater에 바로 context값 전달
         }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return list.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) { //index
+            return i;
+        }
+
+        //외부에서 받는 View를 변환해서 반환한다.
+        @Override
+        public View getView(int i, View v, ViewGroup g) {
+            ViewHoler holder;
+            if(v==null){
+                v=inflater.inflate(R.layout.member_item,null);
+                holder=new ViewHoler();
+                holder.profileImg= (ImageView) v.findViewById(R.id.profileImg);
+                holder.tvName= (TextView) v.findViewById(R.id.tvName);
+                holder.tvPhone= (TextView) v.findViewById(R.id.tvPhone);
+                v.setTag(holder);
+            }else{
+                holder= (ViewHoler) v.getTag();
+            }
+            holder.profileImg.setImageResource(photos[i]);
+            holder.tvName.setText(((MemberBean)list.get(i)).getName());
+            holder.tvPhone.setText(((MemberBean)list.get(i)).getPhone());
+            return v;
+        }
+
     }
     static class ViewHoler{ //getter, setter 안쓰기위해서 static 사용
         ImageView profileImg;
