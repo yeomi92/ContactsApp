@@ -27,6 +27,7 @@ public class MemberlistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memberlist);
         ListView mList= (ListView) findViewById(R.id.mList);
+        mList.setAdapter(new MemberAdapter(null,this));
         final MemberBean member=new MemberBean();
         final ArrayList<MemberBean>list=new ArrayList<>();
         ListService service=new ListService() {
