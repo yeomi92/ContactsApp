@@ -11,7 +11,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public abstract class DetailQuery extends QueryFactory{
     SQLiteOpenHelper helper;
     public DetailQuery(Context context) {
+
         super(context);
+        helper=new DatabaseHelper(context);
     }
 
     @Override

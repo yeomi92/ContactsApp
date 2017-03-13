@@ -1,6 +1,7 @@
 package com.hanbit.contactsapp.presentation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,11 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hanbit.contactsapp.R;
 import com.hanbit.contactsapp.dao.ListQuery;
@@ -21,12 +22,14 @@ import com.hanbit.contactsapp.service.ListService;
 
 import java.util.ArrayList;
 
+import static com.hanbit.contactsapp.R.id.mList;
+
 public class MemberlistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memberlist);
-        ListView mList= (ListView) findViewById(R.id.mList);
+        final ListView listView= (ListView) findViewById(mList);
 
         final MemberBean member=new MemberBean();
         final ArrayList<MemberBean>list=new ArrayList<>();
@@ -37,9 +40,23 @@ public class MemberlistActivity extends AppCompatActivity {
                 return mlist.list("select _id AS id, name, phone, age, address, salary from member;");
             }
         };
-        ArrayList<MemberBean>memberList= (ArrayList<MemberBean>) service.list();
-        Toast.makeText(MemberlistActivity.this,"list검증",Toast.LENGTH_SHORT).show();
-        mList.setAdapter(new MemberAdapter(memberList,this));
+        final ArrayList<MemberBean>memberList= (ArrayList<MemberBean>) service.list();
+        listView.setAdapter(new MemberAdapter(memberList,this));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int i, long l) {
+                MemberBean member= (MemberBean) listView.getItemAtPosition(i);
+                Intent intent=new Intent(MemberlistActivity.this,MemberdetailActivity.class);
+                intent.putExtra("id",member.getId());
+                startActivity(intent);
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View v, int i, long l) {
+                return false;
+            }
+        });
     }
     class MemberList extends ListQuery{
 

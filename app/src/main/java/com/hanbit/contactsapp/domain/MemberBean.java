@@ -24,10 +24,18 @@ public class MemberBean {
     }
 
     public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAge() {
         return age;
     }
 
-    public void setPhone(String age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -47,21 +55,13 @@ public class MemberBean {
         this.salary = salary;
     }
 
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
     @Override
     public String toString() {
         return "MemberBean{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", age='" + phone + '\'' +
-                ", salary='" + age + '\'' +
+                ", phone='" + phone + '\'' +
+                ", age='" + age + '\'' +
                 ", address='" + address + '\'' +
                 ", salary='" + salary + '\'' +
                 '}';
