@@ -152,18 +152,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:id="@+id/btDial"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="DIAL"
+            android:onClick="onClick"
+            android:textSize="20dp"/>
+        <Button
             android:id="@+id/btCall"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="CALL"
-            android:textSize="20dp"/>
-        <Button
-            android:id="@+id/btPhone"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="DIAL"
+            android:onClick="onClick"
             android:textSize="20dp"/>
     </LinearLayout>
     <LinearLayout
@@ -175,6 +177,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="LIST"
+            android:onClick="onClick"
             android:textSize="20dp"/>
         <Button
             android:id="@+id/btGoUpdate"

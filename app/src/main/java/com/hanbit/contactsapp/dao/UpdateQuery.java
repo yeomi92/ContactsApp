@@ -5,20 +5,22 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by hb2008 on 2017-03-10.
+ * Created by hb2008 on 2017-03-14.
  */
 
-public abstract class DetailQuery extends QueryFactory{
+public abstract class UpdateQuery extends QueryFactory{
     SQLiteOpenHelper helper;
-    public DetailQuery(Context context) {
+
+    public UpdateQuery(Context context) {
         super(context);
-        helper=new DatabaseHelper(context);
+        helper = new DatabaseHelper(context);
     }
+
 
     @Override
     public SQLiteDatabase getDatabase() {
-        return helper.getReadableDatabase();
+        return helper.getWritableDatabase();
     }
 
-    public abstract Object detail(String sql);
+    public abstract void update(String sql);
 }
